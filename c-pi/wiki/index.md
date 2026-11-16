@@ -16,7 +16,7 @@ actions:
 
 features:
   - title: Shell 脚本支线（进行中）
-    details: 精读 pi-test.sh：9 篇 + 首页，逐块给例子，把这个 85 行的启动脚本彻底读懂。
+    details: pi-test.sh 陪读教程：7 讲 + 课程首页，逐块给例子，把这个 85 行的启动脚本彻底读懂。
     link: /shell/
   - title: Node 模块解析支线（未开）
     details: 等主线读到 import / require / tsconfig paths 时开站。

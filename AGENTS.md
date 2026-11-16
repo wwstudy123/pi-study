@@ -16,7 +16,7 @@ pi-study/
 └── c-pi/
     ├── docs/   ← 主线 VitePress 文档站（端口 5173）：学习路线 / 运行教程 / 功能地图
     ├── wiki/   ← 支线 VitePress 知识库（端口 5174）：一个主题一个独立侧栏
-    │   └── shell/   # 第一条支线：Shell 脚本（精读 pi-test.sh，9 篇 + 首页）
+    │   └── shell/   # 第一条支线：pi-test.sh 陪读教程（7 讲 + 课程首页）
     └── packages/    ← 预留：将来重写 pi 代码（@c-pi/*）
 ```
 

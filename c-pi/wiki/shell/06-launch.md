@@ -1,4 +1,4 @@
-# 07 · 最后一行：真正启动 Pi
+# 第 6 讲 · 点火发射
 
 前面所有准备，都是为了这最后一行（原文件第 84 行）：
 
@@ -18,17 +18,7 @@ Pi 是用 TypeScript/JavaScript 写的，运行它需要 Node。
 
 ### `--import "$RESOLVER_URL"` —— 开跑前先装翻译官
 
-`--import` 的意思：**在跑主程序之前，先加载这个模块**。
-
-这里加载的是 `source-resolver.ts`，它负责把 `@earendil-works/xxx` 这种包名指到**源码**而不是旧的编译产物。
-
-```bash
-# 你可以感受一下 --import 是什么
-# 先不装翻译官，直接跑一个简单的
-node --import "$(node -p 'require("node:url").pathToFileURL(process.argv[1]).href' "/tmp/随便.ts")" -p '1+1' 2>/dev/null || echo "需要真的 TS 文件"
-```
-
-不用纠结这个实验，记住：**`--import A B` = 先执行 A，再执行 B**。
+`--import` 的意思：**在跑主程序之前，先加载这个模块**。这里加载的是第 5 讲说的"源码别名翻译官"。
 
 ### `"$SCRIPT_DIR/packages/coding-agent/src/cli.ts"` —— 主程序
 
@@ -62,19 +52,18 @@ argv[2] 开始 = 用户敲的参数
 `slice(2)` 就是"从第 3 个开始都要"。你敲的 `--version` 就是从这里进到 Pi 内部的。
 
 ```bash
-# 实验
 node -p 'process.argv.slice(2)' a b c
 # 输出：[ 'a', 'b', 'c' ]
 ```
 
 ### `${ARGS[@]+"${ARGS[@]}"}` —— 安全地转交参数筐
 
-第 04 篇留下的坑，现在填。
+第 3 讲留下的坑，现在填。
 
 - `ARGS[@]` = 数组里的所有参数
 - 外面那层 `${ARGS[@]+...}` 的意思是：**只有当数组存在且非空时，才展开它**
 
-为什么要这么绕？因为老版本 bash 遇到空数组 + `set -u`（第 02 篇的保险丝！）会报错 "unbound variable"。
+为什么要这么绕？因为老版本 bash 遇到"空数组 + set -u"（第 1 讲的保险丝！）会报错 "unbound variable"。
 
 ```bash
 # 实验：空数组 + set -u 的坑
@@ -103,11 +92,11 @@ bash -u -c 'ARGS=(); echo "${ARGS[@]+${ARGS[@]}}"; echo 活着'
 你看到: 1.5.2
 ```
 
-## 本篇自检
+## 本讲自检
 
 - [ ] 我知道最后一行是"启动 cli.ts 并转交参数"
 - [ ] 我知道 --import 是"先装翻译官再跑主程序"
 - [ ] 我知道 cli.ts 只有 5 行，真正的逻辑在 setupCli 和 main
 - [ ] 我能从头到尾复述 --version 的旅程
 
-上一篇：[06 RESOLVER_URL](./06-resolver-url) · 下一篇：[08 动手实验](./08-hands-on) →
+← [第 5 讲](./05-path-to-url) · [第 7 讲 · 毕业总结](./07-graduation) →

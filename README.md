@@ -20,8 +20,8 @@ pi-study/
     │   ├── run-pi.md        # 第一课：亲手把 Pi 跑起来
     │   ├── roadmap.md       # 复刻路线课表
     │   └── feature-map.md   # Pi 功能地图
-    ├── wiki/            # 支线 VitePress 知识库（npm run dev，端口 5174）
-    │   └── shell/           # 第一条支线：逐块精读 pi-test.sh（9 篇 + 首页）
+    ├── wiki/            # 支线 VitePress 知识库（npm run dev:shell，端口 5174）
+    │   └── shell/           # 第一条支线：pi-test.sh 陪读教程（7 讲 + 课程首页）
     └── packages/        # 预留：将来重写 pi 代码
 ```
 

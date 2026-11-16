@@ -1,6 +1,6 @@
-# 03 · 脚本怎么知道自己在哪
+# 第 2 讲 · 找到自己的家
 
-这一篇讲第三行，也是第一个「天书」：
+这一讲讲第三行，也是第一个「天书」：
 
 ```bash
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -33,17 +33,11 @@ cd ~/Zcode/pi-playground
 
 就是 `pi-test.sh` 这个文件，可能是相对路径也可能是绝对路径，取决于你怎么敲的。
 
-```bash
-# 实验：BASH_SOURCE 是脚本内部才能用的
-bash -c 'echo "我被执行时，我的路径是 $0"'
-```
-
 > 为什么不用 `$0`？`$0` 在被 `source` 引入时会是别的文件。`BASH_SOURCE[0]` 更可靠，这是踩过坑的标准写法。
 
 ### 第 2 层：`dirname` —— 去掉文件名，留目录
 
 ```bash
-# 实验
 dirname /Users/xiaenping/Zcode/pi-study/pi/pi-test.sh
 # 输出：/Users/xiaenping/Zcode/pi-study/pi
 
@@ -51,12 +45,11 @@ dirname pi-test.sh
 # 输出：.     ← 相对路径时只给一个点（当前目录），不够用！
 ```
 
-看到没？如果用户用相对路径运行，`dirname` 只给 `.`，后面就找不到文件了。所以要继续包一层。
+看到没？用户用相对路径运行时，`dirname` 只给 `.`，后面就找不到文件了。所以要继续包一层。
 
 ### 第 3 层：`cd ... && pwd` —— 进去再问绝对路径
 
 ```bash
-# 实验：模拟「进到目录里问 pwd」
 cd /Users/xiaenping/Zcode/pi-study/pi && pwd
 # 输出：/Users/xiaenping/Zcode/pi-study/pi   ← 绝对路径，稳了
 ```
@@ -68,13 +61,12 @@ cd /Users/xiaenping/Zcode/pi-study/pi && pwd
 `$(命令)` 叫**命令替换**：先跑里面的命令，把打印出来的文字填进当前位置。
 
 ```bash
-# 实验
 echo "今天是 $(date)"
 NOW=$(date)
 echo "存下来的时间: $NOW"
 ```
 
-所以整行的读法（由内向外）：
+所以整行读法（由内向外）：
 
 ```
 1. BASH_SOURCE[0]          → "pi-test.sh" 或者你敲的路径
@@ -85,16 +77,12 @@ echo "存下来的时间: $NOW"
 
 ### 最外面的双引号
 
-```bash
-SCRIPT_DIR="$(...)"
-```
-
-如果路径里有**空格**（比如 `/Applications/My Files/`），没有引号就会被拆成两个词。**路径永远加引号**，这是保命习惯。
+路径里有**空格**（比如 `/Applications/My Files/`）时，没有引号会被拆成两个词。**路径永远加引号**，保命习惯。
 
 ## 你现在就能做的实验
 
 ```bash
-# 复制这一行到终端直接跑（它就是脚本里那行）
+# 原样照抄脚本里那行，直接在终端跑
 SCRIPT_DIR="$(cd "$(dirname "/Users/xiaenping/Zcode/pi-study/pi/pi-test.sh")" && pwd)"
 echo "$SCRIPT_DIR"
 # 输出：/Users/xiaenping/Zcode/pi-study/pi
@@ -103,10 +91,10 @@ echo "$SCRIPT_DIR"
 ls "$SCRIPT_DIR/packages/coding-agent/src/cli.ts"
 ```
 
-## 本篇自检
+## 本讲自检
 
 - [ ] 我能说出为什么要 SCRIPT_DIR（因为可能在别的目录启动）
 - [ ] 我知道 `$( )` 是"先跑命令，拿输出当值"
 - [ ] 我知道 `dirname` 遇到相对路径会返回 `.`，所以要 cd + pwd
 
-上一篇：[02 保险丝](./02-shebang-and-set) · 下一篇：[04 认参数](./04-args-and-no-env) →
+← [第 1 讲](./01-opening-lines) · [第 3 讲 · 收参数与分拣](./03-collect-args) →

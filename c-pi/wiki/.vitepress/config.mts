@@ -13,18 +13,16 @@ export default defineConfig({
       // 每条支线独立侧栏，互不干扰
       '/shell/': [
         {
-          text: 'Shell 脚本支线',
+          text: 'pi-test.sh 陪读教程',
           items: [
-            { text: '本支线首页', link: '/shell/' },
-            { text: '01 · pi-test.sh 是干什么的', link: '/shell/01-what-is-pi-test-sh' },
-            { text: '02 · 第一行与三根保险丝', link: '/shell/02-shebang-and-set' },
-            { text: '03 · 脚本怎么知道自己在哪', link: '/shell/03-script-dir' },
-            { text: '04 · 认参数：--no-env 是怎么被认出来的', link: '/shell/04-args-and-no-env' },
-            { text: '05 · unset：把 API key 全部扔掉', link: '/shell/05-unset-api-keys' },
-            { text: '06 · 路径变 URL：RESOLVER_URL', link: '/shell/06-resolver-url' },
-            { text: '07 · 最后一行：真正启动 Pi', link: '/shell/07-last-line-node' },
-            { text: '08 · 动手实验（改脚本）', link: '/shell/08-hands-on' },
-            { text: '09 · 自检与常见问题', link: '/shell/09-faq' }
+            { text: '课程首页 · 这个文件是干什么的', link: '/shell/' },
+            { text: '第 1 讲 · 开头两行', link: '/shell/01-opening-lines' },
+            { text: '第 2 讲 · 找到自己的家', link: '/shell/02-find-home' },
+            { text: '第 3 讲 · 收参数与分拣', link: '/shell/03-collect-args' },
+            { text: '第 4 讲 · --no-env 与环境变量', link: '/shell/04-noenv-env' },
+            { text: '第 5 讲 · 把地址翻译成网址', link: '/shell/05-path-to-url' },
+            { text: '第 6 讲 · 点火发射', link: '/shell/06-launch' },
+            { text: '第 7 讲 · 毕业总结', link: '/shell/07-graduation' }
           ]
         }
       ]
