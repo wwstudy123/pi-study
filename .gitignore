@@ -1,0 +1,13 @@
+# 原始学习仓库（Fork 的 Pi 源码，只读对照用，不入库）
+pi/
+
+# AI 工具运行时目录
+.zwork/
+
+# Node
+node_modules/
+dist/
+
+# 日志与临时文件
+*.log
+.DS_Store
