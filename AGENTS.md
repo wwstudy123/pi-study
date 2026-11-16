@@ -87,7 +87,7 @@ npm run check                  # lint + format + 类型检查
 - [x] 验证 CLI 可运行（`./pi-test.sh --version` → 1.5.2）
 - [x] 从 main 检出学习分支 `pi-1116-2026`
 - [ ] 梳理 Pi 的功能清单 / 运行方式 / 功能点地图（复刻依据）
-- [ ] 初始化 c-pi：VitePress 文档站（c-pi/docs）
+- [x] 初始化 c-pi：VitePress 文档站（c-pi/docs，`npm run dev` 启动，http://localhost:5173）
 - [ ] 制定从零复刻 Pi 的最小粒度学习路线
 
 > 备注：首次交互使用 pi 需要 `/login` 连接供应商账号或设置 API key（`pi auth` 管理）。
