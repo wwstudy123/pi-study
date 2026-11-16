@@ -14,11 +14,18 @@
 pi-study/
 ├── AGENTS.md            # AI 协作背景与工作流（先读这个）
 ├── .gitignore           # pi/ 与运行时目录不入库
+├── examples/            # 文章里的动手实验代码
 └── c-pi/
-    └── docs/            # 学习文档（VitePress 文档站根目录）
-        ├── feature-map.md   # Pi 功能地图：功能清单/运行方式/复刻路线总纲
-        └── research/        # 调研底稿（12 包详注 / 43 篇官方文档详注 / 仓库工程结构）
+    ├── docs/            # 主线 VitePress 文档站（npm run dev，端口 5173）
+    │   ├── run-pi.md        # 第一课：亲手把 Pi 跑起来
+    │   ├── roadmap.md       # 复刻路线课表
+    │   └── feature-map.md   # Pi 功能地图
+    ├── wiki/            # 支线 VitePress 知识库（npm run dev，端口 5174）
+    │   └── shell/           # 第一条支线：逐块精读 pi-test.sh（9 篇 + 首页）
+    └── packages/        # 预留：将来重写 pi 代码
 ```
+
+主线读到哪、支线补到哪：以后读到 Node 模块解析、TUI 渲染时，各开一个 `wiki/node-cli/`、`wiki/tui/`，每条支线独立侧栏，互不干扰。
 
 ## 学习工作流
 
