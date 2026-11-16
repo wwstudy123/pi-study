@@ -14,6 +14,7 @@ export default defineConfig({
         text: '学习文档',
         items: [
           { text: '运行 Pi 源码（第一课）', link: '/run-pi' },
+          { text: '复刻路线（课表）', link: '/roadmap' },
           { text: '功能地图（复刻依据）', link: '/feature-map' }
         ]
       },
