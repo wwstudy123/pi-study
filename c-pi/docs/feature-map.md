@@ -1,7 +1,7 @@
 # Pi 功能地图（复刻依据）
 
 > 调研日期：2026-11-16 · 对应 pi/ 快照：`22fc026`（main，v1.5.2）
-> 详细底稿见 [research/](research/) 目录三份调研笔记（packages / features / apps-and-repo）。
+> 详细底稿见三份调研笔记：[12 个库包详注](research/packages.md) · [官方文档功能详注](research/features.md) · [apps 与仓库结构](research/apps-and-repo.md)。
 > 本文是「从零复刻 Pi」的总纲：先知道它有什么，才知道要复刻什么、按什么顺序复刻。
 
 ## 1. Pi 是什么
