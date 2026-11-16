@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev --port 5174",
+    "dev:shell": "vitepress dev --port 5174",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
