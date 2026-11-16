@@ -1,0 +1,10 @@
+{
+  "name": "pi-study",
+  "private": true,
+  "scripts": {
+    "dev:docs": "npm run dev --prefix c-pi/docs",
+    "dev:shell": "npm run dev --prefix c-pi/wiki",
+    "build:docs": "npm run build --prefix c-pi/docs",
+    "build:shell": "npm run build --prefix c-pi/wiki"
+  }
+}
