@@ -131,18 +131,21 @@ mkdir -p ~/Zcode/pi-playground && cd ~/Zcode/pi-playground
 
 ### 6.3 连接一个模型供应商（必须做一次）
 
-不连模型无法对话。三种方式任选：
+不连模型无法对话。**国内网络直接选方式 2（API key + 国内供应商）**，不要先试 OpenAI OAuth——会被地域封锁，详见 §7.1 实录案例。三种方式任选：
 
-1. **OAuth 订阅登录**：在 Pi 里输入 `/login`，按提示选供应商（Anthropic / OpenAI / Google Gemini / GitHub Copilot 等）在浏览器完成授权。
-2. **API key 环境变量**：退出 Pi，`export` 对应变量后再启动。内置供应商都有各自的变量名（见 `packages/coding-agent/docs/providers.md`），例如：
+1. **OAuth 订阅登录**：在 Pi 里输入 `/login`，按提示选供应商（Anthropic / OpenAI / Google Gemini / GitHub Copilot 等）在浏览器完成授权。**OpenAI / Anthropic / Gemini 的 OAuth 从中国大陆 IP 发起会被 403 拒绝**，除非终端走了能落到支持地区的代理。
+2. **API key 环境变量**：退出 Pi，`export` 对应变量后再启动。内置供应商都有各自的变量名（见 `packages/coding-agent/docs/providers.md`），国内可直接用的：
    ```bash
    export DEEPSEEK_API_KEY=sk-xxx        # DeepSeek
    export MOONSHOT_API_KEY=sk-xxx        # Kimi/Moonshot
-   export ZAI_CODING_CN_API_KEY=xxx      # 智谱 GLM（国内）
+   export KIMI_API_KEY=sk-xxx            # Kimi For Coding
+   export ZAI_CODING_CN_API_KEY=xxx      # 智谱 GLM（国内 Coding Plan）
+   export MINIMAX_CN_API_KEY=xxx         # MiniMax 国内
+   export QWEN_TOKEN_PLAN_INDIVIDUAL_CN_API_KEY=xxx   # 通义千问国内
    ```
 3. **任意 OpenAI 兼容端点**：写 `~/.pi/agent/models.json` 声明（Ollama / vLLM / 中转都行），详见 `docs/models-configuration.md`。
 
-> 学习点：凭据解析优先级是 `--api-key` > `auth.json` > `models.json` > 环境变量。`/login` 的凭据落在 `~/.pi/agent/auth.json`。
+> 学习点：凭据解析优先级是 `--api-key` > `auth.json` > `models.json` > 环境变量。`/login` 的凭据落在 `~/.pi/agent/auth.json`。`/login` 也支持纯 API key 供应商——选 DeepSeek 等然后粘贴 key，效果等同环境变量，且会存进 auth.json 下次不用再 export。
 
 ### 6.4 发第一条消息
 
@@ -190,8 +193,38 @@ ls ~/.pi/agent/sessions/
 | 构建报 `xxx.json is not valid JSON: ENOENT`（providers/data 下） | 新克隆仓库没有模型数据 | `npm run hydrate:model-data` 后重新 build |
 | `pi-test.sh: permission denied` | 脚本无执行位 | `chmod +x pi-test.sh` 或 `bash pi-test.sh` |
 | 启动后无法对话、提示无可用供应商 | 没配凭据 | 见 6.3 三种方式 |
+| `/login` OpenAI 报 403 `unsupported_country_region_territory` | 中国大陆 IP 被 OpenAI OAuth 拒绝 | 见下方实录案例；换国内供应商 API key 最快 |
 | 想验证「无 API key 也能跑」 | 环境里已有 key 干扰 | `./pi-test.sh --no-env`（脚本会 unset 全部 key 环境变量） |
 | `engines` 报 Node 版本不符 | Node < 22.19 | 升级 Node |
+
+### 7.1 实录：OpenAI OAuth 403（国内网络）
+
+**现象**（2026-11-16，本机实录）：启动后警告没有可用模型，`/login` 选 OpenAI 后报错：
+
+![OpenAI OAuth 403 实录](./images/openai-login-403.png)
+
+```
+Warning: No models available. Use /login to log into a provider via OAuth or API key.
+Error: Failed to login to OpenAI: OpenAI OAuth token request failed (403):
+{"error":{"code":"unsupported_country_region_territory","message":"Country, region, or territory not supported","param":null,"type":"request_forbidden"}}
+```
+
+**原因**：这不是 Pi 的 bug。OpenAI 的 OAuth token 接口按 IP 归属地拦截中国大陆等不支持地区的请求，返回 403 `unsupported_country_region_territory`。前面的 `Warning: No models available` 只是因为还没配任何凭据，属正常提示。
+
+**解决（按推荐顺序）**：
+
+1. **换国内供应商 + API key（推荐，学习最顺）**：去 DeepSeek / Moonshot Kimi / 智谱开放平台任一家申请 key，然后：
+   ```bash
+   export DEEPSEEK_API_KEY=sk-xxx
+   cd ~/Zcode/pi-playground
+   ~/Zcode/pi-study/pi/pi-test.sh
+   # 进去后 /model 选 deepseek 模型即可对话
+   ```
+   也可以不 export，直接在 Pi 里 `/login deepseek` 粘贴 key（存 auth.json，一劳永逸）。
+2. **坚持用 OpenAI OAuth**：让终端流量从支持地区出去（全局/TUN 模式代理），再 `/login openai` 重试。只设 `HTTPS_PROXY` 不一定生效——Node 的 fetch 不一定读这个变量，不行就用方案 1。
+3. **OpenAI 官方 API key + 兼容端点/中转**：有 key 但网络不通时，用 `models.json` 指向可达的 OpenAI 兼容地址，不要走 OAuth。
+
+**验证是否配好**：重启 Pi 后页脚应显示模型名，或输入 `/model` 能看到可选模型列表；`/session` 能看到 provider。
 
 ---
 
